@@ -29,3 +29,14 @@ Then, from the command line, move into the `pyxterm` folder.
 Run `npm install` to install the necessary packages.
 
 Then run `npm run build` to build the plugin (which will be exported to `/build/pyxterm.js`), or `npm run dev` to automatically rebuild the plugin when changes are observed.
+
+## Resources:
+
+- [xtermjs docs](http://xtermjs.org/docs/)
+
+# Prior Art
+
+Some features of this project are inspired by other projects, including:
+  - [xterm-js-shell](https://github.com/RangerMauve/xterm-js-shell/blob/master/index.js)
+  - [This CodePen](https://codepen.io/iiiiiiiiiiiiiiiiiiiiii/pen/LYRjybP) - Author Unknown
+  - [pyTermTk](https://github.com/ceccopierangiolieugenio/pyTermTk)
