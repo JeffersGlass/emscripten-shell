@@ -1,0 +1,13 @@
+{
+  "name": "py-xterm",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "dependencies": {
+    "@rollup/plugin-typescript": "^11.0.0",
+    "rollup": "^3.10.0",
+    "tslib": "^2.4.1"
+  }
+}
