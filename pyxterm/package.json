@@ -6,8 +6,14 @@
     "dev": "rollup -c -w"
   },
   "dependencies": {
+    "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-typescript": "^11.0.0",
     "rollup": "^3.10.0",
-    "tslib": "^2.4.1"
+    "tslib": "^2.4.1",
+    "xterm": "^5.1.0",
+    "xterm-addon-fit": "^0.7.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.0.1"
   }
 }
