@@ -1,6 +1,5 @@
-//import { Terminal } from 'xterm';
 import { Terminal } from 'xterm'
-//import { FitAddon } from 'xterm-addon-fit';
+import "../node_modules/xterm/css/xterm.css"
 
 const term = new Terminal();
 const target_id = "terminal";
