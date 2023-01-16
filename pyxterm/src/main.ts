@@ -2,7 +2,10 @@ import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import "../node_modules/xterm/css/xterm.css"
 
-const term = new Terminal();
+const term = new Terminal({
+    allowProposedApi: true,
+    cursorBlink: true,
+});
 const fit = new FitAddon();
 
 term.loadAddon(fit)
