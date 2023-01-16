@@ -15,12 +15,13 @@ export default class pyXterm {
             term.open(el as HTMLElement);
             fit.fit();
             term.write("Proident irure minim eu nulla reprehenderit.")
-            console.log("Made new console")
         }
         
     }
     beforePyScriptExec(){}
+
     afterPyScriptExec(){}
+    
     afterStartup(runtime){
     } 
 }
