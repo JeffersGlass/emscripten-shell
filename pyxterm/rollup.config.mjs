@@ -4,7 +4,7 @@ import { nodeResolve } from "@rollup/plugin-node-resolve"
 import postcss from 'rollup-plugin-postcss'
 
 export default {
-    input: "src/main.ts",
+    input: "src/pyxtermplugin.ts",
     output: [
         {
             file: "build/pyxterm.js",
