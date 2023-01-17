@@ -13,14 +13,15 @@ class xtermElement extends HTMLElement {
             allowProposedApi: true,
             cursorBlink: true,
         });
-        const psh = new Emshell(term);  
+        const emsh = new Emshell(term);  
 
         const fit = new FitAddon();
         term.loadAddon(fit)
 
         term.open(this);
         fit.fit();
-        term.write(String(new Date()))
+
+        term.write("Started Emshell at " + String(new Date()))
         term.write("\r\n")
     }
 }
