@@ -13,7 +13,7 @@ class xtermElement extends HTMLElement {
             allowProposedApi: true,
             cursorBlink: true,
         });
-        const emsh = new Emshell(term);  
+        const emsh = new Emshell(term, 'none');  
 
         const fit = new FitAddon();
         term.loadAddon(fit)
@@ -23,6 +23,10 @@ class xtermElement extends HTMLElement {
 
         term.write("Started Emshell at " + String(new Date()))
         term.write("\r\n")
+        const test_string = "ls world"
+        const parts = test_string.split(' ')
+        const command = emsh.commands.get(parts[0])
+        command.parse(parts.slice(1), {from: 'user'})
     }
 }
 
