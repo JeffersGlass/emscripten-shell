@@ -2,6 +2,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import typescript from "@rollup/plugin-typescript"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 import postcss from 'rollup-plugin-postcss'
+import nodePolyfills from 'rollup-plugin-node-polyfills'
 
 export default {
     input: "src/pyxtermplugin.ts",
@@ -23,6 +24,7 @@ export default {
         }),
         postcss({
             extensions: ['.css' ],
-        })
+        }),
+        nodePolyfills(),
     ],
 }
