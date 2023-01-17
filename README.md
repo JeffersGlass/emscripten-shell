@@ -1,5 +1,12 @@
-# py-xterm
-A PyScript plugin that adds an interactive terminal to the page
+# Emscripten Shell
+A lightweight POSIX-like shell interface for Emscripten Filesystems. This can be used for any Emscripten-backed application.
+
+If using this shell with [Pyodide](https://github.com/pyodide/pyodide) project, additional functionality is included for using the Python interpreter in the Brower.
+
+Finally, the shell element and Python extension are packaged as a [PyScript](https://github.com/pyscript/pyscript) [plugin](https://docs.pyscript.net/unstable/guides/custom-plugins.html) (see compatibility below).
+
+# Status
+The development here is so early it can't even be called Alpha. Currently working on parsing in the [jisons branch](https://github.com/JeffersGlass/emscripten-shell/tree/jisons)
 
 # Compatibility
 
