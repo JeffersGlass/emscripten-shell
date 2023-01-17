@@ -8,7 +8,7 @@ class PSH {
     constructor (terminal: Terminal) {
         this.terminal = terminal
         //this.terminal.attachCustomKeyEventHandler(this.onKey)
-        this.terminal.onKey(this.onKey)
+        this.terminal.onKey(this.onKey.bind(this))
     }
 
     onKey(e: {key: string, domEvent: KeyboardEvent}, f: void) {
@@ -26,11 +26,7 @@ export default class pyXterm {
                 allowProposedApi: true,
                 cursorBlink: true,
             });
-            //psh = new PSH(term);
-            term.onKey((e: {key: string, domEvent: KeyboardEvent}, f: void) => {
-                console.log(e.key); // getting in browser console but Not in the browser itself
-                term.write(e.key)
-            })
+            const psh = new PSH(term);  
 
             const fit = new FitAddon();
             term.loadAddon(fit)
