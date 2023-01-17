@@ -44,6 +44,9 @@ export class Emshell {
 
         commands.set('cwd', new Command().name('cwd')
             .description("Gets the current working directory")
+            .action((options) => {
+                this.write(this.FS.cwd())
+            })
         )
 
         return commands

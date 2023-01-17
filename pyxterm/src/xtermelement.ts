@@ -4,8 +4,18 @@ import { FitAddon } from "xterm-addon-fit";
 import { Emshell } from "./shell";
 
 class xtermElement extends HTMLElement {
+    FS
+
     constructor() {
         super();
+        const fsName = this.getAttribute("FS")
+        if (fsName){
+            this.FS = eval(fsName)
+            console.log(this.FS)
+        }
+        else {
+            throw new EvalError(`${fsName} is not a valid JS object in global scope`)
+        }
     }
 
     connectedCallback() {
@@ -13,7 +23,7 @@ class xtermElement extends HTMLElement {
             allowProposedApi: true,
             cursorBlink: true,
         });
-        const emsh = new Emshell(term, 'none');  
+        const emsh = new Emshell(term, this.FS);  
 
         const fit = new FitAddon();
         term.loadAddon(fit)
@@ -23,7 +33,7 @@ class xtermElement extends HTMLElement {
 
         term.write("Started Emshell at " + String(new Date()))
         term.write("\r\n")
-        const test_string = "ls world"
+        const test_string = "cwd"
         const parts = test_string.split(' ')
         const command = emsh.commands.get(parts[0])
         command.parse(parts.slice(1), {from: 'user'})
