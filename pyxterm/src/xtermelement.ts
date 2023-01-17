@@ -2,6 +2,7 @@ import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 
 import { Emshell } from "./shell";
+import { parser } from '../grammar/build/emsh.js'
 
 class xtermElement extends HTMLElement {
     constructor() {
@@ -23,6 +24,7 @@ class xtermElement extends HTMLElement {
 
         term.write("Started Emshell at " + String(new Date()))
         term.write("\r\n")
+        term.write(parser.parse("1 + 2 - 4"))
     }
 }
 

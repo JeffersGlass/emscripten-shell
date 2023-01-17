@@ -30,13 +30,23 @@ Run `npm install` to install the necessary packages.
 
 Then run `npm run build` to build the plugin (which will be exported to `/build/pyxterm.js`), or `npm run dev` to automatically rebuild the plugin when changes are observed.
 
-## Resources:
-
-- [xtermjs docs](http://xtermjs.org/docs/)
-
 # Prior Art
 
 Some features of this project are inspired by other projects, including:
   - [xterm-js-shell](https://github.com/RangerMauve/xterm-js-shell/blob/master/index.js)
   - [This CodePen](https://codepen.io/iiiiiiiiiiiiiiiiiiiiii/pen/LYRjybP) - Author Unknown
   - [pyTermTk](https://github.com/ceccopierangiolieugenio/pyTermTk)
+
+## Resources:
+
+### Packages
+- [xtermjs docs](http://xtermjs.org/docs/)
+
+### Shell
+- [Posix Shell Specification](https://pubs.opengroup.org/onlinepubs/007904975/utilities/xcu_chap02.html#tag_02_03)
+- [A Static Parser for the POSIX Shell](https://hal.science/hal-01890044/document)
+- [Write a Shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/) Tutorial
+- [Jison Docs](https://gerhobbelt.github.io/jison/docs/#the-concepts-of-jison)
+- [Jison-gho](https://github.com/GerHobbelt/jison)
+- [Flex and Bison](https://web.iitd.ac.in/~sumeet/flex__bison.pdf)
+- [An example Grammar](https://gist.github.com/zaach/1659274)

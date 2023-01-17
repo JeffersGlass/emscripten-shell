@@ -2,13 +2,19 @@
     "lex": {
         "rules": [
             [ "\\s+", "/*skip whitespace*/" ],
-            [ "[a-f0-9]+", "return 'HEX';" ]
+            [ "cat", "return 'CAT';"],
+            [ "0-9+", "return 'NUMBER';"],
+            [ "[a-fA-F0-9]+", "return 'HEX';" ]
+            
         ]
     },
     "bnf": {
-        "hex_strings": [
-            "hex_strings HEX",
-            "HEX"
+        "statement" :[
+            "CAT value"
+        ],
+        "value": [
+            "HEX",
+            "NUMBER"
         ]
     }
 }

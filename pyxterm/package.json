@@ -2,14 +2,15 @@
   "name": "py-xterm",
   "version": "0.0.1",
   "scripts": {
-    "build": "rollup -c",
+    "build": "npm run build:grammar && rollup -c",
     "dev": "rollup -c -w",
-    "build:grammar": "jisons -j grammar/emsh.json -o grammar/build/emsh.js"
+    "build:grammar": "jison -j grammar/emsh.json -o grammar/build/emsh.js -m commonjs",
+    "build:l": "jison -j grammar/emsh.l -o grammar/build/emsh.js -m commonjs"
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-typescript": "^11.0.0",
-    "jisons": "^1.0.0",
+    "jison-gho": "^0.6.1-216",
     "rollup": "^3.10.0",
     "rollup-plugin-postcss": "^4.0.2",
     "tslib": "^2.4.1",
