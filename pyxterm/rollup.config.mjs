@@ -18,7 +18,8 @@ export default {
         commonjs(),
         typescript(),
         nodeResolve({
-            browser: false
+            browser: false,
+            preferBuiltins: true
         }),
         postcss({
             extensions: ['.css' ],

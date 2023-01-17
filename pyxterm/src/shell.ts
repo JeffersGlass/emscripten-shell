@@ -1,12 +1,14 @@
 import type { Terminal } from "xterm";
+import { makeParser } from './commandparser'
 
 export class Emshell {
     terminal: Terminal
+    commandParser
 
     constructor (terminal: Terminal) {
         this.terminal = terminal
-        //this.terminal.attachCustomKeyEventHandler(this.onKey)
         this.terminal.onKey(this.onKey.bind(this))
+        this.commandParser = makeParser()
     }
 
     onKey(e: {key: string, domEvent: KeyboardEvent}, f: void) {
