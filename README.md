@@ -8,7 +8,7 @@ Finally, the shell element and Python extension are packaged as a [PyScript](htt
 # Status
 The development here is so early it can't even be called Alpha. Currently working on parsing in the [jisons branch](https://github.com/JeffersGlass/emscripten-shell/tree/jisons)
 
-# Compatibility
+# Compatibility (PyScript)
 
 This plugin is only usable in versions of PyScript after the merge of [PR 1065](https://github.com/pyscript/pyscript/pull/1065) on Janaury 11, 2023. Currently, this is not part of any stable release of PyScript. To try it out, link to the `unstable` release at:
 
@@ -16,7 +16,7 @@ This plugin is only usable in versions of PyScript after the merge of [PR 1065](
 <script defer src="https://pyscript.net/unstable/pyscript.js"></script>
 <link rel="stylesheet" href="https://pyscript.net/unstable/pyscript.css">
 ```
-# Usage
+# Usage (PyScript)
 
 After building the plugin from source (see below), in the `<py-config>` section of your PyScript page, include a link to the build verison of this Plugin in `plugins` list.
 
