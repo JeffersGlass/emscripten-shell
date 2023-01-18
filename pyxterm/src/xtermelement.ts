@@ -4,19 +4,12 @@ import { FitAddon } from "xterm-addon-fit";
 import { Emshell } from "./shell";
 import { Command } from "commander";
 
-class xtermElement extends HTMLElement {
-    FS
+export class xtermElement extends HTMLElement {
+    FS //Implements the Emscripten Filesystem API
+    emsh: Emshell
 
     constructor() {
         super();
-        const fsName = this.getAttribute("FS")
-        if (fsName){
-            this.FS = eval(fsName)
-            console.log(this.FS)
-        }
-        else {
-            throw new EvalError(`${fsName} is not a valid JS object in global scope`)
-        }
     }
 
     connectedCallback() {
@@ -24,7 +17,17 @@ class xtermElement extends HTMLElement {
             allowProposedApi: true,
             cursorBlink: true,
         });
-        const emsh = new Emshell(term, this.FS);  
+
+        const fsName = this.getAttribute("FS")
+        let FS
+        if (fsName){
+            FS = eval(fsName)
+        }
+        else {
+            throw new EvalError(`${fsName} is not a valid JS object in global scope`)
+        }
+
+        this.emsh = new Emshell(term, FS);  
 
         const fit = new FitAddon();
         term.loadAddon(fit)
@@ -32,11 +35,7 @@ class xtermElement extends HTMLElement {
         term.open(this);
         fit.fit();
 
-        emsh.write("Started Emshell at " + String(new Date()))
-        emsh.newConsoleLine()        
+        this.emsh.write("Started Emshell at " + String(new Date()))
+        this.emsh.newConsoleLine()        
     }
-}
-
-export function makeXtermElement(){
-    customElements.define("py-xterm", xtermElement)
 }

@@ -1,11 +1,15 @@
 import type { Terminal } from "xterm";
 import { Command } from 'commander'
 
-
+type IDisposable {
+    dispose(): void
+}
 export class Emshell {
     terminal: Terminal
+    keyhandler: IDisposable
     FS //Implements the Emscripten Filesystem API
     commands = new Map<String, Command>()
+    muteShellLeader = false
     
     currentLine = '';
 
@@ -13,7 +17,7 @@ export class Emshell {
     constructor (terminal: Terminal, FS) {
         this.terminal = terminal
         this.FS = FS
-        this.terminal.onKey(this.onKey.bind(this))
+        this.keyhandler = this.terminal.onKey(this.onKey.bind(this))
         this.makeCommands()
     }
 
@@ -61,6 +65,19 @@ export class Emshell {
 
     addCommand(name: String, command: Command){
         this.commands.set(name, command)
+    }
+
+    restoreShell(){
+        this.muteShellLeader = false
+        this.terminal.reset()
+        this.terminal.write(this.linePrefix)
+        this.assertKeyHandling()
+    }
+
+    assertKeyHandling(){
+        console.warn("Terminal handling keys")
+        this.keyhandler?.dispose()
+        this.keyhandler = this.terminal.onKey(this.onKey.bind(this))
     }
 
     makeCommands(){
@@ -148,6 +165,7 @@ export class Emshell {
     }
 
     get linePrefix() {
-        return this.FS.cwd() + "$ "
+        if (this.muteShellLeader) return ''
+        else return this.FS.cwd() + "$ "
     }
 }
