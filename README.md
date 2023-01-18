@@ -39,7 +39,18 @@ Then run `npm run build` to build the plugin (which will be exported to `/build/
 
 ## Resources:
 
+### Xterm
 - [xtermjs docs](http://xtermjs.org/docs/)
+- [xterm control sequences](https://www.xfree86.org/current/ctlseqs.html)
+
+### Commanderjs
+- [Commanderjs GitHub](https://github.com/tj/commander.js#automated-help)
+
+### Emscripten
+- [Emscripten Filesystem API](https://emscripten.org/docs/api_reference/Filesystem-API.html)
+
+### Interpreter
+- [Code.py stclib](https://github.com/python/cpython/blob/main/Lib/code.py)
 
 # Prior Art
 
