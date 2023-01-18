@@ -29,4 +29,8 @@ export default {
             process: true
         }),
     ],
+    onwarn (warning, warn) {
+        //suppress "don't use eval" rollup warning
+        if (warning.code === 'EVAL' ) return
+    }
 }
