@@ -31,7 +31,6 @@ export class Emshell {
         } 
         else if (e.key === '\r'){ //enter pressed
             this.executeLine(this.currentLine)
-            this.newConsoleLine()
         } 
         else {
             this.write(e.key);
@@ -105,6 +104,7 @@ export class Emshell {
                         }
                     this.write(`${pre}${path}${post}  `)
                     });
+                this.newConsoleLine()
                 })
             .configureOutput({
                 writeOut: (str) => {console.log(str)},
@@ -119,7 +119,7 @@ export class Emshell {
             .action((options) => {
                 this.write("\n")
                 this.write(this.FS.cwd())
-                
+                this.newConsoleLine()
             })
             .configureOutput({
                 writeOut: (str) => {console.log(str)},
@@ -153,6 +153,7 @@ export class Emshell {
                     if (!path) this.write("\nYou must provide a [path] to change to")
                     else this.write(`\nCould not resolve path '${path}'`)
                 }
+                this.newConsoleLine()
             })
             .configureOutput({
                 writeOut: (str) => {console.log(str)},
@@ -166,6 +167,6 @@ export class Emshell {
 
     get linePrefix() {
         if (this.muteShellLeader) return ''
-        else return this.FS.cwd() + "$ "
+        else return '\x1b[93m' + this.FS.cwd() + "$ " + '\x1b[0m'
     }
 }

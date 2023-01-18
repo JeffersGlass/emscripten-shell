@@ -28,13 +28,13 @@ class xtermInteractive(InteractiveConsole):
         except AttributeError:
             sys.ps2 = "... "
 
+        self.write('\n')
         cprt = 'Type "help", "copyright", "credits" or "license" for more information.'
         if banner is None:
-            self.write("Python %s on %s\n%s\n(%s)\n" %
-                    (sys.version, sys.platform, cprt,
-                        self.__class__.__name__))
+            self.write("Python %s on %s\n%s\n" %
+                    (sys.version, sys.platform, cprt))
         elif banner:
-            self.write("%s\n" % str(banner))
+            self.write(f"{str(banner)}")
 
         sys.stdout = self
         sys.stderr = self
@@ -58,34 +58,11 @@ class xtermInteractive(InteractiveConsole):
         elif event.domEvent.ctrlKey and event.domEvent.key == 'c':
             self.endInteraction()
         elif event.domEvent.key == 'Backspace':
-            self.line = self.line[:-1]
-            self.write('\x1b[D \x1b[D')
+            if len(self.line):
+                self.line = self.line[:-1]
+                self.write('\x1b[D \x1b[D')
         else:
             self.line += event.key
             self.write(event.key)
-
-    def interact(self, banner=None, exitmsg=None):
-        more = 0
-        while 1:
-            try:
-                if more:
-                    prompt = sys.ps2
-                else:
-                    prompt = sys.ps1
-                try:
-                    line = self.raw_input(prompt)
-                except EOFError:
-                    self.write("\n")
-                    break
-                else:
-                    more = self.push(line)
-            except KeyboardInterrupt:
-                self.write("\nKeyboardInterrupt\n")
-                self.resetbuffer()
-                more = 0
-        if exitmsg is None:
-            self.write('now exiting %s...\n' % self.__class__.__name__)
-        elif exitmsg != '':
-            self.write('%s\n' % exitmsg)
 
 xtermInteractive

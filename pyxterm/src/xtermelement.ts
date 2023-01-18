@@ -18,13 +18,17 @@ export class xtermElement extends HTMLElement {
             cursorBlink: true,
         });
 
-        const fsName = this.getAttribute("FS")
         let FS
+
+        const fsName = this.getAttribute("FS")        
         if (fsName){
             FS = eval(fsName)
         }
+        else if('pyscript' in globalThis){
+            FS = globalThis['pyscript'].interpreter.interface.FS
+        }
         else {
-            throw new EvalError(`${fsName} is not a valid JS object in global scope`)
+            throw new EvalError(`Filesystem could not be indentified from FS=${fsName} or PyScript default`)
         }
 
         this.emsh = new Emshell(term, FS);  

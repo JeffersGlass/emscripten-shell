@@ -36,12 +36,13 @@ class pyscriptXtermElement extends xtermElement {
             .description("Run the python interpreter")
             .action(options => {
                 this.emsh.muteShellLeader = true
-                const term = this.emsh.terminal
                 const pyInterpClass = pyscriptModule.interpreter.interface.runPython(pysrc)
                 const pyInterp = pyInterpClass(this.emsh)
+
                 this.emsh.keyhandler.dispose()
-                this.emsh.keyhandler = term.onKey(pyInterp.onKey)
                 pyInterp.beginInteraction()
+                
+                this.emsh.keyhandler = this.emsh.terminal.onKey(pyInterp.onKey)
                 console.warn("Python now handling onkey")
             })
         )
