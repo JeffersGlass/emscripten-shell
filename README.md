@@ -1,4 +1,5 @@
 # Emscripten Shell
+
 A lightweight POSIX-like shell interface for Emscripten Filesystems. This can be used for any Emscripten-backed application.
 
 If using this shell with [Pyodide](https://github.com/pyodide/pyodide) project, additional functionality is included for using the Python interpreter in the Brower.
@@ -67,6 +68,6 @@ Then run `npm run build` to build the plugin (which will be exported to `/build/
 
 Some features of this project are inspired by other projects, including:
 
-  - [xterm-js-shell](https://github.com/RangerMauve/xterm-js-shell/blob/master/index.js)
-  - [This CodePen](https://codepen.io/iiiiiiiiiiiiiiiiiiiiii/pen/LYRjybP) - Author Unknown
-  - [pyTermTk](https://github.com/ceccopierangiolieugenio/pyTermTk)
+- [xterm-js-shell](https://github.com/RangerMauve/xterm-js-shell/blob/master/index.js)
+- [This CodePen](https://codepen.io/iiiiiiiiiiiiiiiiiiiiii/pen/LYRjybP) - Author Unknown
+- [pyTermTk](https://github.com/ceccopierangiolieugenio/pyTermTk)
