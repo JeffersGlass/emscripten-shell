@@ -12,6 +12,7 @@
     "rollup": "^3.10.0",
     "rollup-plugin-polyfill-node": "^0.11.0",
     "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-terser": "^7.0.2",
     "tslib": "^2.4.1",
     "xterm": "^5.1.0",
     "xterm-addon-fit": "^0.7.0"
