@@ -59,6 +59,7 @@ export class Emshell {
         else {
             this.write(`\nNo command found matching '${line}'. Known commands are `)
             this.write(Array.from(this.commands.keys()).join(', '))
+            this.newConsoleLine()
         }
     }
 
@@ -69,6 +70,7 @@ export class Emshell {
     restoreShell(){
         this.muteShellLeader = false
         this.terminal.reset()
+        this.currentLine = ''
         this.terminal.write(this.linePrefix)
         this.assertKeyHandling()
     }
@@ -160,6 +162,30 @@ export class Emshell {
                 writeErr: (str) => {this.write(str)},
                 getErrHelpWidth: () => {return 40}, //Todo - make this actual terminal width
                 getOutHelpWidth: () => {return 40}, //Todo - make this actual terminal width
+            })
+        )
+
+        this.addCommand('clear', new Command().name('clear')
+            .description('clear the screen')
+            .action(() => {
+                this.terminal.clear()
+                this.newConsoleLine()
+            })
+        )
+
+        this.addCommand('help', new Command().name('help')
+            .description('Get help!')
+            .argument('[command]', 'The command to get help with')
+            .action((command) => {
+                this.write("\n")
+                if (command) {
+                    this.write(this.commands.get(command).helpInformation())
+                }
+                else {
+                    this.write(`\nKnown commands are `)
+                    this.write(Array.from(this.commands.keys()).join(', '))
+                }
+                this.newConsoleLine()
             })
         )
 

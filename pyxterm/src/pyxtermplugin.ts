@@ -46,6 +46,23 @@ class pyscriptXtermElement extends xtermElement {
                 console.warn("Python now handling onkey")
             })
         )
+
+        const pip = new Command().name('pip')
+            .description("Install new packages")
+
+        pip.command('install')
+            .argument('[packages...]', 'the packages to be installed')
+            .action((packages) => {
+                    pyscriptModule.interpreter.interface.loadPackage(
+                        packages,
+                        (str) => {this.emsh.write(str + "\n")},
+                        (str) => {this.emsh.write(str + "\n")}
+                        )
+
+                    this.emsh.newConsoleLine()
+            })
+
+        this.emsh.addCommand("pip", pip)
     }
 
     blockCopy(event) {

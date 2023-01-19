@@ -65,4 +65,28 @@ class xtermInteractive(InteractiveConsole):
             self.line += event.key
             self.write(event.key)
 
+    def runcode(self, code):
+        """Execute a code object.
+
+        When an exception occurs, self.showtraceback() is called to
+        display a traceback.  All exceptions are caught except
+        SystemExit, which is reraised.
+
+        A note about KeyboardInterrupt: this exception may occur
+        elsewhere in this code, and may not always be caught.  The
+        caller should be prepared to deal with it.
+
+        This version is slightly modified from 
+        InteractiveInterpreter.runcode(), in that it runs with the 
+        Pyodide global scope. It is used by runsource(), which is used
+        by push()
+
+        """
+        try:
+            exec(code)
+        except SystemExit:
+            raise
+        except:
+            self.showtraceback()
+
 xtermInteractive
