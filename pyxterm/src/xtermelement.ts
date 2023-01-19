@@ -4,6 +4,8 @@ import { FitAddon } from "xterm-addon-fit";
 import { Emshell } from "./shell";
 import { Command } from "commander";
 
+export { defaultOutputConfig } from "./shell"
+
 export class xtermElement extends HTMLElement {
     FS //Implements the Emscripten Filesystem API
     emsh: Emshell
@@ -40,6 +42,7 @@ export class xtermElement extends HTMLElement {
         fit.fit();
 
         this.emsh.write("Started Emshell at " + String(new Date()))
+        this.emsh.write("\nType 'help' to see a list of commands")
         this.emsh.newConsoleLine()        
     }
 }

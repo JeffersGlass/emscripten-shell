@@ -18,7 +18,7 @@ export default {
     ],
     plugins: [
         string({
-            include: "./src/*.py" 
+            include: "./src/*.py"
         }),
         commonjs(),
         typescript(),

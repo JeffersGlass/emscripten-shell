@@ -1,6 +1,6 @@
 import "../node_modules/xterm/css/xterm.css"
 
-import { xtermElement } from "./xtermelement"
+import { xtermElement, defaultOutputConfig } from "./xtermelement"
 import { Command } from "commander"
 
 import pysrc from "./interactive.py"
@@ -45,6 +45,7 @@ class pyscriptXtermElement extends xtermElement {
                 this.emsh.keyhandler = this.emsh.terminal.onKey(pyInterp.onKey)
                 console.warn("Python now handling onkey")
             })
+            .configureOutput(defaultOutputConfig)
         )
 
         const pip = new Command().name('pip')
@@ -59,8 +60,12 @@ class pyscriptXtermElement extends xtermElement {
                         (str) => {this.emsh.write(str + "\n")}
                         )
 
+                    const importlib = pyscriptModule.interpreter.interface.pyimport("importlib")
+                    importlib.invalidate_caches()
+
                     this.emsh.newConsoleLine()
             })
+            .configureOutput(defaultOutputConfig)
 
         this.emsh.addCommand("pip", pip)
     }

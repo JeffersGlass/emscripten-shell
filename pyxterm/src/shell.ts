@@ -1,9 +1,19 @@
 import type { Terminal } from "xterm";
 import { Command } from 'commander'
 
-type IDisposable {
+const version = "0.0.1"
+
+type IDisposable = {
     dispose(): void
 }
+
+export const defaultOutputConfig = {
+    writeOut: (str) => {console.log(str)},
+    writeErr: (str) => {console.log(str)},
+    getErrHelpWidth: () => {return 40}, //Todo - make this actual terminal width
+    getOutHelpWidth: () => {return 40}, //Todo - make this actual terminal width
+}
+
 export class Emshell {
     terminal: Terminal
     keyhandler: IDisposable
@@ -108,12 +118,7 @@ export class Emshell {
                     });
                 this.newConsoleLine()
                 })
-            .configureOutput({
-                writeOut: (str) => {console.log(str)},
-                writeErr: (str) => {console.log(str)},
-                getErrHelpWidth: () => {return 40}, //Todo - make this actual terminal width
-                getOutHelpWidth: () => {return 40}, //Todo - make this actual terminal width
-            })
+            .configureOutput(defaultOutputConfig)
         )
 
         this.addCommand('pwd', new Command().name('pwd')
@@ -123,12 +128,7 @@ export class Emshell {
                 this.write(this.FS.cwd())
                 this.newConsoleLine()
             })
-            .configureOutput({
-                writeOut: (str) => {console.log(str)},
-                writeErr: (str) => {console.log(str)},
-                getErrHelpWidth: () => {return 40}, //Todo - make this actual terminal width
-                getOutHelpWidth: () => {return 40}, //Todo - make this actual terminal width
-            })
+            .configureOutput(defaultOutputConfig)
         )
 
         this.addCommand('cd', new Command().name('cd')
@@ -157,12 +157,7 @@ export class Emshell {
                 }
                 this.newConsoleLine()
             })
-            .configureOutput({
-                writeOut: (str) => {console.log(str)},
-                writeErr: (str) => {this.write(str)},
-                getErrHelpWidth: () => {return 40}, //Todo - make this actual terminal width
-                getOutHelpWidth: () => {return 40}, //Todo - make this actual terminal width
-            })
+            .configureOutput(defaultOutputConfig)
         )
 
         this.addCommand('clear', new Command().name('clear')
@@ -171,22 +166,32 @@ export class Emshell {
                 this.terminal.clear()
                 this.newConsoleLine()
             })
+            .configureOutput(defaultOutputConfig)
         )
+        
 
         this.addCommand('help', new Command().name('help')
             .description('Get help!')
             .argument('[command]', 'The command to get help with')
             .action((command) => {
-                this.write("\n")
                 if (command) {
-                    this.write(this.commands.get(command).helpInformation())
+                    this.write("\n" + this.commands.get(command).helpInformation())
                 }
                 else {
-                    this.write(`\nKnown commands are `)
-                    this.write(Array.from(this.commands.keys()).join(', '))
+                    this.write(`\nEmscripten-Shell, version ${version}`)
+                    this.write("\nThese shell commands are defined internally.  Type `help' to see this list.")
+                    this.write("Type `help name' to find out more about the function `name'.")
+                    this.write("\n")
+                    //Display name and short description of each command
+                    Array.from(this.commands.keys()).sort().forEach(key => {
+                        this.write(`\n ${key}`)
+                        const shortDescription = this.commands.get(key)?.summary() ? this.commands.get(key).summary() : this.commands.get(key).description()
+                        this.write(`\x1b[20G${shortDescription}`)
+                    })
                 }
                 this.newConsoleLine()
             })
+            .configureOutput(defaultOutputConfig)
         )
 
     }
