@@ -101,6 +101,7 @@ export class Emshell {
                 if (!path){
                     path = '.'
                 }
+                try{
                 const contents: Array<String> = this.FS.readdir(path)
                 contents.forEach(path => {
                     let pre = ''
@@ -117,6 +118,11 @@ export class Emshell {
                         }
                     this.write(`${pre}${path}${post}  `)
                     });
+                }
+                catch (err) {
+                    this.write(`Could not print files from path ${path}`)
+                    console.error(err)
+                }
                 this.newConsoleLine()
                 })
             .configureOutput(defaultOutputConfig)
@@ -136,30 +142,54 @@ export class Emshell {
             .description("Change the current working directory")
             .argument('[path]', 'the directory to change to')
             .action((path: String, options) => {
-                if (path && path.substring(0,1) !== '/'){
-                    //Preprocess path
-                    const pathParts = path.split('/')
-                    const usePath = new Array<String>()
-                    pathParts.forEach((element, i) => {  
-                        if (element == '..') { usePath.push(...pathParts.slice(0, -1))}
-                        else if (element = '.') {usePath.push(...pathParts)}
-                        else usePath.push(element)
-                    });
-
-                    path = pathParts.join('/')
+                if (!path) this.write("\nYou must provide a [path] to change to")
+                else {
+                    try {
+                            const foundNode = this.FS.lookupPath(path)
+                            this.FS.chdir(foundNode.path);
+                        }
+                        catch (error) {
+                            this.write(`\nCould not resolve path '${path}'`)
+                        }
+                        this.newConsoleLine()
                 }
-
-                try {
-                    this.FS.chdir(path);
-                }
-                catch (error) {
-                    if (!path) this.write("\nYou must provide a [path] to change to")
-                    else this.write(`\nCould not resolve path '${path}'`)
-                }
-                this.newConsoleLine()
             })
             .configureOutput(defaultOutputConfig)
         )
+
+        /* this.addCommand('cat', new Command().name('cat')
+            .description('Print the contents of a file to the terminal')
+            .argument('<path>', 'The path to the file to be printed')
+            .action(() => {
+                this.write("\nThis command is not yet implemented")
+            })
+        ) */
+
+        /* this.addCommand('mkdir', new Command().name('mkdir')
+            .description("Create a new directory in the file system")
+            .argument('[path]', 'The directory to be created')
+            .action((path) => {
+                this.write('\n')
+                if (!path){
+                    this.write("You must provide a path")
+                }
+                else {
+                    try{
+                        console.log(path)
+                        let result = this.FS.lookupPath(path)
+                        console.log(`Newpath: ${result}`)
+                        this.FS.mkdir(result.path)
+                    }
+                    catch (err) {
+                        this.write(`Unable to create directory at '${path}'`)
+                        console.error(err)
+                    }
+                }
+
+                this.newConsoleLine()
+            })
+            .configureOutput(defaultOutputConfig)
+        ) */
 
         this.addCommand('clear', new Command().name('clear')
             .description('clear the screen')
