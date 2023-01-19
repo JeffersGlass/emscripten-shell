@@ -43,8 +43,10 @@ export class Emshell {
             this.executeLine(this.currentLine)
         } 
         else {
+            if (e.key.length == 1){
+                this.currentLine += e.key
+            }
             this.write(e.key);
-            this.currentLine += e.key
         }
     }
 

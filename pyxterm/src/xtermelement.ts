@@ -41,7 +41,7 @@ export class xtermElement extends HTMLElement {
         term.open(this);
         fit.fit();
 
-        this.emsh.write("Started Emshell at " + String(new Date()))
+        this.emsh.write("Started EmShell at " + String(new Date()))
         this.emsh.write("\nType 'help' to see a list of commands")
         this.emsh.newConsoleLine()        
     }

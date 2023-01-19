@@ -61,9 +61,10 @@ class xtermInteractive(InteractiveConsole):
             if len(self.line):
                 self.line = self.line[:-1]
                 self.write('\x1b[D \x1b[D')
-        elif len(event.key) == 1:
-            self.line += event.key
+        else:
+            if len(event.key) == 1: self.line += event.key
             self.write(event.key)
+        
         
         # Fallthrough
 
