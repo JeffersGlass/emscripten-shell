@@ -46,3 +46,7 @@ export class xtermElement extends HTMLElement {
         this.emsh.newConsoleLine()        
     }
 }
+
+export function makeXtermElement(){
+    customElements.define("x-term", xtermElement)
+}
