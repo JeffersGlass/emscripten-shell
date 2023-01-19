@@ -94,7 +94,7 @@ export class Emshell {
 
     makeCommands(){
         this.addCommand('ls', new Command().name('ls')
-            .description("list files")
+            .description("List files")
             .argument('[path]', 'the path to list files from (optional)')
             .action((path: String, options) => {
                 this.write("\n")
@@ -180,7 +180,24 @@ export class Emshell {
 
                 this.newConsoleLine()
             })
+            .configureOutput(defaultOutputConfig)
         ) 
+
+        this.addCommand('touch', new Command().name('touch')
+            .description('Modify the access time for a file')
+            .argument('<path>', 'The path to the file to create or adjust the time on')
+            .action((path) => {
+                try {
+                    this.FS.writeFile(path, '')
+                }
+                catch (err) {
+                    this.write(`Could not touch path ${path}`)
+                    console.error(err)
+                }
+                this.newConsoleLine()
+            })
+            .configureOutput(defaultOutputConfig)
+        )
 
         /* this.addCommand('mkdir', new Command().name('mkdir')
             .description("Create a new directory in the file system")
@@ -209,7 +226,7 @@ export class Emshell {
         ) */
 
         this.addCommand('clear', new Command().name('clear')
-            .description('clear the screen')
+            .description('Clear the screen')
             .action(() => {
                 this.terminal.clear()
                 this.newConsoleLine()
