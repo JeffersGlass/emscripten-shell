@@ -55,7 +55,7 @@ class xtermInteractive(InteractiveConsole):
             self.line = ''
             if self.more: self.write(sys.ps2)
             else: self.write(sys.ps1)
-        elif event.domEvent.ctrlKey and event.domEvent.key == 'c':
+        elif event.domEvent.ctrlKey and event.domEvent.key == 'd':
             self.endInteraction()
         elif event.domEvent.key == 'Backspace':
             if len(self.line):
