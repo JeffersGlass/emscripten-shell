@@ -86,7 +86,6 @@ export class Emshell {
     }
 
     assertKeyHandling(){
-        console.warn("Terminal handling keys")
         this.keyhandler?.dispose()
         this.keyhandler = this.terminal.onKey(this.onKey.bind(this))
     }

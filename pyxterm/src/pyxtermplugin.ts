@@ -18,14 +18,12 @@ class pyscriptXtermElement extends xtermElement {
         this.addPythonCommands(globalThis['pyscript'])
         this.addEventListener('focusin', (event) => 
             {
-                console.log("Adding copy blocker")
                 this.addEventListener('copy', this.blockCopy)
             }
         )
 
         this.addEventListener('focusout', (event) => 
             {
-                console.log("Removing copy blocker")
                 this.removeEventListener('copy', this.blockCopy)
             }
         )
@@ -43,7 +41,6 @@ class pyscriptXtermElement extends xtermElement {
                 pyInterp.beginInteraction()
                 
                 this.emsh.keyhandler = this.emsh.terminal.onKey(pyInterp.onKey)
-                console.warn("Python now handling onkey")
             })
             .configureOutput(defaultOutputConfig)
         )
