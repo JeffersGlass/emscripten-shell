@@ -1,3 +1,5 @@
+![The lgoo](logo_full.png)
+
 # Emscripten Shell
 
 A lightweight POSIX-like shell interface for Emscripten Filesystems. This can be used for any Emscripten-backed application.
