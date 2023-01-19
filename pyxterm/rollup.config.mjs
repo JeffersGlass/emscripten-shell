@@ -6,25 +6,30 @@ import nodePolyfills from 'rollup-plugin-polyfill-node'
 import { string } from 'rollup-plugin-string'
 import { terser } from 'rollup-plugin-terser'
 
+const output = [
+    {
+        file: "build/pyxterm.js",
+        format: "module",
+        sourcemap: true,
+        inlineDynamicImports: true,
+        name: "pyxterm"
+    },
+]
+
+if (!process.env.ROLLUP_WATCH){
+    output.push({
+        file: "build/pyxterm.min.js",
+        format: "module",
+        sourcemap: true,
+        inlineDynamicImports: true,
+        name: "pyxterm",
+        plugins: [terser()],
+      })
+}
+
 export default {
     input: "src/pyxtermplugin.ts",
-    output: [
-        {
-            file: "build/pyxterm.js",
-            format: "module",
-            sourcemap: true,
-            inlineDynamicImports: true,
-            name: "pyxterm"
-        },
-        {
-            file: "build/pyxterm.min.js",
-            format: "module",
-            sourcemap: true,
-            inlineDynamicImports: true,
-            name: "pyxterm",
-            plugins: [terser()],
-          },
-    ],
+    output: output,
     plugins: [
         string({
             include: "./src/*.py"

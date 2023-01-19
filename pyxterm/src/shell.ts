@@ -157,13 +157,30 @@ export class Emshell {
             .configureOutput(defaultOutputConfig)
         )
 
-        /* this.addCommand('cat', new Command().name('cat')
+         this.addCommand('cat', new Command().name('cat')
             .description('Print the contents of a file to the terminal')
-            .argument('<path>', 'The path to the file to be printed')
-            .action(() => {
-                this.write("\nThis command is not yet implemented")
+            .argument('<paths...>', 'The path(s) to the file to be printed')
+            .option('-n', 'Print line numbers')
+            .action((paths, options) => {
+                //this.write("\nThis command is not yet implemented")
+                this.write("\n")
+                paths.forEach((path, index) => {
+                    try {
+                        let contents = this.FS.readFile(path, { encoding: 'utf8' })
+                        if (options.n){
+                            console.log("LINE NUMBERS")
+                            contents = contents.split('\n').map((line, index) => `${index + 1} ${line}`).join('\n')
+                        }
+                        this.write(contents)
+                    }
+                    catch (err) {
+                        console.error(err)
+                    }    
+                });
+
+                this.newConsoleLine()
             })
-        ) */
+        ) 
 
         /* this.addCommand('mkdir', new Command().name('mkdir')
             .description("Create a new directory in the file system")
