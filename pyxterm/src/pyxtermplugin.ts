@@ -1,9 +1,10 @@
 import "../node_modules/xterm/css/xterm.css"
 
 import { xtermElement, defaultOutputConfig } from "./xtermelement"
+import { encodingUTF8 } from "./shell"
 import { Command } from "commander"
 
-import pysrc from "./interactive.py"
+import interactiveSrc from "./interactive.py"
 
 class pyscriptXtermElement extends xtermElement {
     pyscript //PyScriptApp
@@ -32,15 +33,30 @@ class pyscriptXtermElement extends xtermElement {
     addPythonCommands(pyscriptModule) {
         this.emsh.addCommand('python', new Command().name('python')
             .description("Run the python interpreter")
+            .option('-m <path>', "Run the specified python module")
             .action(options => {
-                this.emsh.muteShellLeader = true
-                const pyInterpClass = pyscriptModule.interpreter.interface.runPython(pysrc)
-                const pyInterp = pyInterpClass(this.emsh)
+                if (options.m){
+                    try{
+                        const modulesrc = this.emsh.FS.readFile(options.m, encodingUTF8)    
+                        pyscriptModule.interpreter.interface.runPython(modulesrc)
+                        this.emsh.newConsoleLine()
+                    }
+                    catch (err) {
+                        this.emsh.write(`Could not read source path '${options.m}'`)
+                        console.error(err)
+                    }
 
-                this.emsh.keyhandler.dispose()
-                pyInterp.beginInteraction()
-                
-                this.emsh.keyhandler = this.emsh.terminal.onKey(pyInterp.onKey)
+                }
+                else {
+                    this.emsh.muteShellLeader = true
+                    const pyInterpClass = pyscriptModule.interpreter.interface.runPython(interactiveSrc)
+                    const pyInterp = pyInterpClass(this.emsh)
+
+                    this.emsh.keyhandler.dispose()
+                    pyInterp.beginInteraction()
+                    
+                    this.emsh.keyhandler = this.emsh.terminal.onKey(pyInterp.onKey)
+                }
             })
             .configureOutput(defaultOutputConfig)
         )

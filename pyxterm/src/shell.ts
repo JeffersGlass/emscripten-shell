@@ -14,6 +14,7 @@ export const defaultOutputConfig = {
     getOutHelpWidth: () => {return 40}, //Todo - make this actual terminal width
 }
 
+export const encodingUTF8 = { encoding: 'utf8' }
 export class Emshell {
     terminal: Terminal
     keyhandler: IDisposable
@@ -166,7 +167,7 @@ export class Emshell {
                 this.write("\n")
                 paths.forEach((path, index) => {
                     try {
-                        let contents = this.FS.readFile(path, { encoding: 'utf8' })
+                        let contents = this.FS.readFile(path, encodingUTF8)
                         if (options.n){
                             console.log("LINE NUMBERS")
                             contents = contents.split('\n').map((line, index) => `${index + 1} ${line}`).join('\n')
