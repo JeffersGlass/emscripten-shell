@@ -6,18 +6,28 @@ import nodePolyfills from 'rollup-plugin-polyfill-node'
 import { string } from 'rollup-plugin-string'
 import { terser } from 'rollup-plugin-terser'
 
-const output = [
+const plugin_output = [
     {
-        file: "build/pyxterm.js",
+        file: "build/pyxtermPlugin.js",
         format: "module",
         sourcemap: true,
         inlineDynamicImports: true,
-        name: "pyxterm"
+        name: "pyxtermPlugin"
+    },
+]
+
+const element_output = [
+    {
+        file: "build/pyxtermElement.js",
+        format: "module",
+        sourcemap: true,
+        inlineDynamicImports: true,
+        name: "pyxtermElement"
     },
 ]
 
 if (!process.env.ROLLUP_WATCH){
-    output.push({
+    plugin_output.push({
         file: "build/pyxterm.min.js",
         format: "module",
         sourcemap: true,
@@ -27,35 +37,72 @@ if (!process.env.ROLLUP_WATCH){
       })
 }
 
-export default {
-    input: "src/pyxtermplugin.ts",
-    output: output,
-    plugins: [
-        string({
-            include: "./src/*.py"
-        }),
-        commonjs(),
-        typescript(),    {
-      file: "build/pyscript.min.js",
-      format: "iife",
-      sourcemap: true,
-      inlineDynamicImports: true,
-      name: "pyscript",
-      plugins: [terser()],
-    },
-        nodeResolve({
-            browser: false,
-            preferBuiltins: true
-        }),
-        postcss({
-            extensions: ['.css' ],
-        }),
-        nodePolyfills({
-            process: true
-        }),
-    ],
-    onwarn (warning, warn) {
-        //suppress "don't use eval" rollup warning
-        if (warning.code === 'EVAL' ) return
-    }
+const shared_config = {
+    
 }
+
+export default [
+    {
+        input: "src/pyxtermplugin.ts",
+        output: plugin_output,
+        plugins: [
+            string({
+                include: "./src/*.py"
+            }),
+            commonjs(),
+            typescript(),    {
+        file: "build/pyscript.min.js",
+        format: "iife",
+        sourcemap: true,
+        inlineDynamicImports: true,
+        name: "pyscript",
+        },
+            nodeResolve({
+                browser: false,
+                preferBuiltins: true
+            }),
+            postcss({
+                extensions: ['.css' ],
+            }),
+            nodePolyfills({
+                process: true
+            }),
+        ],
+        onwarn (warning, warn) {
+            //suppress "don't use eval" rollup warning
+            if (warning.code === 'EVAL' ) return
+        }
+    }, 
+    ///// element
+    {
+        input: "src/pyXtermElement.ts",
+        output: element_output,
+        plugins: [
+            string({
+                include: "./src/*.py"
+            }),
+            commonjs(),
+            typescript(),    {
+        file: "build/pyscript.min.js",
+        format: "iife",
+        sourcemap: true,
+        inlineDynamicImports: true,
+        name: "pyscriptXtermElement",
+        },
+            nodeResolve({
+                browser: false,
+                preferBuiltins: true
+            }),
+            postcss({
+                extensions: ['.css' ],
+            }),
+            nodePolyfills({
+                process: true
+            }),
+        ],
+        onwarn (warning, warn) {
+            //suppress "don't use eval" rollup warning
+            if (warning.code === 'EVAL' ) return
+        }
+    }
+]
